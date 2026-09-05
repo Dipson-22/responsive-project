@@ -6251,6 +6251,138 @@ img, svg { max-width: 100%; height: auto; }
 
 .mobile-nav-actions .btn { width: 100%; padding: 14px; }
 
+
+
+
+
+
+/* ==========================================================================
+   SAMHAL — MOBILE-FIRST RESPONSIVE SYSTEM (v2)
+   Replace the entire old block titled:
+   "UNIFIED SAMHAL RESPONSIVE SYSTEM (TABLET, MOBILE & COMPACT)"
+   at the bottom of style.css with everything below.
+   ========================================================================== */
+
+/* ---- Design tokens for mobile ---- */
+:root {
+    --mobile-margin: 20px;      /* one consistent screen margin, used everywhere */
+    --mobile-gap-lg: 32px;      /* generous vertical space between sections */
+    --mobile-gap-md: 20px;
+    --tap-target: 44px;         /* minimum comfortable tap size */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+img, svg { max-width: 100%; height: auto; }
+
+/* ==========================================================================
+   HAMBURGER MENU — shared across header-public / header-customer / header-provider
+   ========================================================================== */
+
+.mobile-menu-btn {
+    display: none; /* only shown at 768px breakpoint below */
+    background: transparent;
+    border: none;
+    color: var(--navy);
+    width: var(--tap-target);
+    height: var(--tap-target);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.mobile-nav-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(80vw, 320px);
+    height: 100vh;
+    background-color: var(--white);
+    box-shadow: -8px 0 32px rgba(19, 27, 46, 0.15);
+    z-index: 10000;
+    transform: translateX(100%);
+    transition: transform 0.28s ease;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.mobile-nav-panel.open { transform: translateX(0); }
+
+.mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(19, 27, 46, 0.4);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+}
+
+.mobile-nav-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.mobile-nav-close {
+    background: transparent;
+    border: none;
+    color: var(--navy);
+    width: var(--tap-target);
+    height: var(--tap-target);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-nav-links a {
+    display: block;
+    padding: 16px 8px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+}
+
+.mobile-nav-links a.active { color: var(--primary); }
+
+.mobile-nav-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 24px;
+}
+
+.mobile-nav-actions .btn { width: 100%; padding: 14px; }
+
 /* ==========================================================================
    1. TABLET (max-width: 1024px)
    ========================================================================== */
@@ -6515,44 +6647,13 @@ img, svg { max-width: 100%; height: auto; }
     .pd-req-actions { flex-direction: column !important; gap: 10px !important; }
 
     /* ===================== FOOTER ===================== */
-/* ===================== FOOTER — left-aligned two-column, stays side-by-side down to ~600px ===================== */
-.footer-container {
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    align-items: flex-start !important;
-    justify-content: space-between !important;
-    text-align: left !important;
-    gap: var(--mobile-gap-md) !important;
-}
-.footer-left {
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
-    width: auto !important;
-    flex: 1 1 240px;
-}
-.footer-right {
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    width: auto !important;
-}
-.footer-links {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 14px !important;
-}
+    .footer-container { flex-direction: column !important; text-align: center !important; gap: var(--mobile-gap-md) !important; }
+    .footer-left, .footer-right { align-items: center !important; justify-content: center !important; width: 100% !important; }
+    .footer-links { flex-direction: column !important; gap: 14px !important; }
 
-
-@media screen and (max-width: 480px) {
-    .footer-container {
-        flex-direction: column !important;
-    }
-    .footer-left, .footer-right {
-        width: 100% !important;
-    }
-}
-.footer-left .brand-logo-group { height: 40px !important; margin-left: 0 !important; }
-.footer-left .brand-logo-img { height: 100px !important; margin-left: 0 !important; margin-top: 0 !important; }
+    /* ===================== TOAST ===================== */
+    #toast-container { left: var(--mobile-margin) !important; right: var(--mobile-margin) !important; top: var(--mobile-margin) !important; }
+    .toast-box { min-width: 100% !important; max-width: 100% !important; padding: 14px 18px !important; }
 
     /* ===================== NOTIFICATION DROPDOWN — full width sheet, not tiny popover ===================== */
     .notification-dropdown {
@@ -6581,4 +6682,60 @@ img, svg { max-width: 100%; height: auto; }
     .payment-grid { grid-template-columns: 1fr !important; }
     .bap-stats-grid, .pd-stats-grid { grid-template-columns: 1fr !important; }
     .hiw-steps-grid, .bap-steps-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ==========================================================================
+   FOOTER — FINAL OVERRIDE (left-aligned two-column on mobile/tablet,
+   left-aligned single column only on very small phones)
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    .footer-container {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        text-align: left !important;
+        gap: 20px !important;
+    }
+    .footer-left {
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: auto !important;
+        flex: 1 1 240px;
+    }
+    .footer-right {
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        width: auto !important;
+    }
+    .footer-links {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 14px !important;
+    }
+
+    /* Footer logo — fixes the 160px oversized/blurry logo bug */
+    .footer-left .brand-logo-group {
+        height: 40px !important;
+        margin-left: 0 !important;
+    }
+    .footer-left .brand-logo-img {
+        height: 100px !important;
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+    }
+    .footer-left .tagline {
+        max-width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .footer-container {
+        flex-direction: column !important;
+    }
+    .footer-left, .footer-right {
+        width: 100% !important;
+    }
 }

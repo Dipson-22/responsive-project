@@ -19,121 +19,154 @@
     <div id="toast-container"></div>
 
     <!-- SPA HEADER SYSTEM -->
-    <div id="header-wrapper">
-        
-        <!-- VARIANT A: Public -->
-        <nav id="header-public" class="navbar">
-            <div class="container nav-container">
-                <a href="#" onclick="navigateTo('home'); return false;" class="logo brand-logo-group">
+  <!--
+    HOW TO USE THIS FILE:
+    Replace the <div id="header-wrapper">...</div> block in index.html with everything
+    below. This keeps all existing desktop behavior identical and adds:
+      1. A hamburger button + slide-in mobile nav panel for each header variant
+      2. Proper classes on previously-unclassed inline-style divs in header-customer
+         (this is what was breaking mobile responsiveness there)
+    Also add script.js additions at the bottom of this file to a matching location
+    in script.js.
+-->
+
+<div id="header-wrapper">
+
+    <!-- VARIANT A: Public -->
+    <nav id="header-public" class="navbar">
+        <div class="container nav-container">
+            <a href="#" onclick="navigateTo('home'); return false;" class="logo brand-logo-group">
+                <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="navigateTo('home'); return false;" class="active">Home</a></li>
+                <li><a href="#" onclick="navigateTo('services'); return false;">Services</a></li>
+                <li><a href="#" onclick="navigateTo('howItWorks'); return false;">How it Works</a></li>
+                <li><a href="#" onclick="navigateTo('becomeProvider'); return false;">Become Provider</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" onclick="navigateTo('login'); return false;" class="login-link">Login</a>
+                <a href="#" onclick="navigateTo('login', {openSignup: true}); return false;" class="btn btn-primary">Get Started</a>
+            </div>
+            <!-- NEW: hamburger, mobile only -->
+            <button class="mobile-menu-btn" aria-label="Open menu" onclick="openMobileNav('public')">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- VARIANT B: Customer Logged-in -->
+    <nav id="header-customer" class="dashboard-navbar hidden">
+        <div class="container nav-container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+
+            <!-- FIXED: was an unclassed inline-style div, now has .dash-nav-left so mobile CSS can target it -->
+            <div class="dash-nav-left">
+                <a href="#" onclick="navigateTo('dashboard'); return false;" class="logo brand-logo-group">
                     <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
                 </a>
                 <ul class="nav-links">
-                    <li><a href="#" onclick="navigateTo('home'); return false;" class="active">Home</a></li>
+                    <li><a href="#" onclick="navigateTo('dashboard'); return false;">Home</a></li>
                     <li><a href="#" onclick="navigateTo('services'); return false;">Services</a></li>
-                    <li><a href="#" onclick="navigateTo('howItWorks'); return false;">How it Works</a></li>
-                    <li><a href="#" onclick="navigateTo('becomeProvider'); return false;">Become Provider</a></li>
+                    <li><a href="#" onclick="navigateTo('findProvider'); return false;">Find Provider</a></li>
+                    <li><a href="#" onclick="handleTrackServiceClick(); return false;">Track Service</a></li>
                 </ul>
-
-                <div class="nav-actions">
-                    <a href="#" onclick="navigateTo('login'); return false;" class="login-link">Login</a>
-                    <a href="#" onclick="navigateTo('login', {openSignup: true}); return false;" class="btn btn-primary">Get Started</a>
-                </div>
             </div>
-        </nav>
 
-        <!-- VARIANT B: Customer Logged-in -->
-        <nav id="header-customer" class="dashboard-navbar hidden">
-            <div class="container nav-container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                
-                <!-- Left: Logo & Nav Links -->
-                <div style="display: flex; align-items: center; gap: 40px;">
-                    <a href="#" onclick="navigateTo('dashboard'); return false;" class="logo brand-logo-group">
-                        <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
-                    </a>
-                    <ul class="nav-links" style="display: flex; gap: 24px; margin: 0; padding: 0;">
-                        <li><a href="#" onclick="navigateTo('dashboard'); return false;">Home</a></li>
-                        <li><a href="#" onclick="navigateTo('services'); return false;">Services</a></li>
-                        <li><a href="#" onclick="navigateTo('findProvider'); return false;">Find Provider</a></li>
-                        <li><a href="#" onclick="handleTrackServiceClick(); return false;">Track Service</a></li>
-                    </ul>
-                </div>
+            <div class="dash-nav-actions">
 
-                <!-- Right: Search Bar, Notifications, & Avatar Dropdown -->
-                <div class="dash-nav-actions" style="display: flex; align-items: center; gap: 24px;">
-                    
                 <div class="fap-search-bar" style="height: 44px; display: flex; align-items: center; background-color: #EAEDFF; border-radius: 24px; padding: 0 4px 0 16px; border: 1px solid rgba(195, 198, 215, 0.5);">
-    <div style="display: flex; align-items: center; gap: 6px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#505F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-        <input type="text" id="global-loc-input" placeholder="Butwal" style="border: none; background: transparent; width: 60px; outline: none; font-size: 14px; color: #131B2E; font-family: 'Inter', sans-serif;">
-    </div>
-    <div style="width: 1px; height: 20px; background-color: rgba(195, 198, 215, 0.8); margin: 0 12px;"></div>
-    <input type="text" id="global-query-input" placeholder="Search providers..." onkeydown="if(event.key==='Enter'){ handleHeaderGlobalSearch(); }" style="border: none; background: transparent; width: 160px; outline: none; font-size: 14px; margin-right: 8px; color: #131B2E; font-family: 'Inter', sans-serif;">
-    <button id="global-search-btn" onclick="handleHeaderGlobalSearch()" type="button" style="width: 36px; height: 36px; border-radius: 50%; background-color: #004AC6; color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-    </button>
-</div>
-
-                    <!-- Notification Bell & Dropdown Wrapper -->
-                    <div style="position: relative;">
-                        <button id="notification-bell-btn" class="icon-btn" aria-label="Notifications" style="background: transparent; border: none; color: #505F76; cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; padding: 4px;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                            <span id="notification-badge" class="notif-badge hidden"></span>
-                        </button>
-
-                        <!-- Notification Dropdown Panel -->
-                        <div id="notification-dropdown" class="notification-dropdown hidden">
-                            <div class="notif-header">
-                                <span>Notifications</span>
-                            </div>
-                            <div id="notification-list" class="notif-list">
-                                <!-- JS will inject notification items here -->
-                            </div>
-                        </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#505F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <input type="text" id="global-loc-input" placeholder="Butwal" style="border: none; background: transparent; width: 60px; outline: none; font-size: 14px; color: #131B2E; font-family: 'Inter', sans-serif;">
                     </div>
-                    
-                    <!-- Dynamic Customer Avatar & Dropdown -->
-                    <div style="position: relative;">
-                        <div id="customer-header-avatar" class="dash-avatar" style="width: 40px; height: 40px; background-color: #E2E7FF; color: #004AC6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; cursor: pointer;">A</div>
-                        <div id="customer-profile-dropdown" style="display: none; position: absolute; right: 0; top: 50px; background: white; border: 1px solid #E2E4EB; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 220px; z-index: 1000; padding: 8px 0; text-align: left;">
-                            <div style="padding: 8px 16px;">
-                                <p id="dropdown-user-name" style="margin: 0; font-weight: 600; color: #131B2E; font-size: 14px;">Aarav</p>
-                                <p id="dropdown-user-email" style="margin: 0; font-size: 12px; color: #737686;">aarav@gmail.com</p>
-                            </div>
-                            <div style="height: 1px; background: #E2E4EB; margin: 4px 0;"></div>
-                            <a href="#" onclick="return false;" style="display: block; padding: 10px 16px; color: #131B2E; text-decoration: none; font-size: 14px;">My Profile</a>
-                            <a href="#" onclick="return false;" style="display: block; padding: 10px 16px; color: #131B2E; text-decoration: none; font-size: 14px;">Settings</a>
-                            <div style="height: 1px; background: #E2E4EB; margin: 4px 0;"></div>
-                            <a href="#" onclick="handleCustomerLogout(); return false;" style="display: block; padding: 10px 16px; color: #BA1A1A; text-decoration: none; font-size: 14px; font-weight: 600;">Logout</a>
-                        </div>
+                    <div style="width: 1px; height: 20px; background-color: rgba(195, 198, 215, 0.8); margin: 0 12px;"></div>
+                    <input type="text" id="global-query-input" placeholder="Search providers..." style="border: none; background: transparent; width: 160px; outline: none; font-size: 14px; margin-right: 8px; color: #131B2E; font-family: 'Inter', sans-serif;">
+                    <button id="global-search-btn" style="width: 36px; height: 36px; border-radius: 50%; background-color: #004AC6; color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </button>
+                </div>
+
+                <!-- FIXED: was unclassed <div style="position: relative;">, now .dash-notif-wrapper -->
+                <div class="dash-notif-wrapper">
+                    <button id="notification-bell-btn" class="icon-btn" aria-label="Notifications" style="background: transparent; border: none; color: #505F76; cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        <span id="notification-badge" class="notif-badge hidden"></span>
+                    </button>
+                    <div id="notification-dropdown" class="notification-dropdown hidden">
+                        <div class="notif-header"><span>Notifications</span></div>
+                        <div id="notification-list" class="notif-list"></div>
                     </div>
-
                 </div>
-            </div>
-        </nav>
 
-        <!-- VARIANT C: Provider Profile -->
-        <nav id="header-provider" class="navbar hidden">
-            <div class="container nav-container">
-                <a href="#" onclick="navigateTo('providerProfile'); return false;" class="logo brand-logo-group">
-                    <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
-                </a>
-                <ul class="nav-links">
-                    <li><a href="#" onclick="navigateTo('providerProfile'); return false;">Home</a></li>
-                    <li><a href="#" onclick="navigateTo('providerDashboard'); return false;">Dashboard</a></li>
-                </ul>
-                <div class="nav-actions">
-                    <a href="#" onclick="appState.isLoggedIn=false; appState.role=null; navigateTo('home'); showPopup('Logged out successfully', 'success'); return false;" class="login-link">Logout</a>
+                <!-- FIXED: was unclassed <div style="position: relative;">, now .dash-avatar-wrapper -->
+                <div class="dash-avatar-wrapper">
+                    <div id="customer-header-avatar" class="dash-avatar" style="width: 40px; height: 40px; background-color: #E2E7FF; color: #004AC6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; cursor: pointer;">A</div>
+                    <div id="customer-profile-dropdown" style="display: none; position: absolute; right: 0; top: 50px; background: white; border: 1px solid #E2E4EB; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 220px; z-index: 1000; padding: 8px 0; text-align: left;">
+                        <div style="padding: 8px 16px;">
+                            <p id="dropdown-user-name" style="margin: 0; font-weight: 600; color: #131B2E; font-size: 14px;">Aarav</p>
+                            <p id="dropdown-user-email" style="margin: 0; font-size: 12px; color: #737686;">aarav@gmail.com</p>
+                        </div>
+                        <div style="height: 1px; background: #E2E4EB; margin: 4px 0;"></div>
+                        <a href="#" onclick="return false;" style="display: block; padding: 10px 16px; color: #131B2E; text-decoration: none; font-size: 14px;">My Profile</a>
+                        <a href="#" onclick="return false;" style="display: block; padding: 10px 16px; color: #131B2E; text-decoration: none; font-size: 14px;">Settings</a>
+                        <div style="height: 1px; background: #E2E4EB; margin: 4px 0;"></div>
+                        <a href="#" onclick="handleCustomerLogout(); return false;" style="display: block; padding: 10px 16px; color: #BA1A1A; text-decoration: none; font-size: 14px; font-weight: 600;">Logout</a>
+                    </div>
                 </div>
-            </div>
-        </nav>
 
-        <!-- VARIANT D: Minimal Provider -->
-        <nav id="header-provider-minimal" class="navbar hidden" style="justify-content: flex-end; padding-right: 20px;">
+                <!-- NEW: hamburger, mobile only -->
+                <button class="mobile-menu-btn" aria-label="Open menu" onclick="openMobileNav('customer')">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- VARIANT C: Provider Profile -->
+    <nav id="header-provider" class="navbar hidden">
+        <div class="container nav-container">
             <a href="#" onclick="navigateTo('providerProfile'); return false;" class="logo brand-logo-group">
                 <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
             </a>
-        </nav>
+            <ul class="nav-links">
+                <li><a href="#" onclick="navigateTo('providerProfile'); return false;">Home</a></li>
+                <li><a href="#" onclick="navigateTo('providerDashboard'); return false;">Dashboard</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" onclick="appState.isLoggedIn=false; appState.role=null; navigateTo('home'); showPopup('Logged out successfully', 'success'); return false;" class="login-link">Logout</a>
+            </div>
+            <!-- NEW: hamburger, mobile only -->
+            <button class="mobile-menu-btn" aria-label="Open menu" onclick="openMobileNav('provider')">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- VARIANT D: Minimal Provider -->
+    <nav id="header-provider-minimal" class="navbar hidden" style="justify-content: flex-end; padding-right: 20px;">
+        <a href="#" onclick="navigateTo('providerProfile'); return false;" class="logo brand-logo-group">
+            <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+        </a>
+    </nav>
+
+    <!-- NEW: shared mobile nav panel + backdrop, reused by all 3 variants above -->
+    <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+    <div id="mobile-nav-panel" class="mobile-nav-panel">
+        <div class="mobile-nav-header">
+            <span class="brand-logo-group"><img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img"></span>
+            <button class="mobile-nav-close" aria-label="Close menu" onclick="closeMobileNav()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <ul id="mobile-nav-links" class="mobile-nav-links">
+            <!-- filled dynamically by JS based on which header is active -->
+        </ul>
+        <div id="mobile-nav-actions" class="mobile-nav-actions">
+            <!-- filled dynamically by JS -->
+        </div>
     </div>
+
+</div>
 
     <!-- DYNAMIC APP CONTENT -->
     <main id="app-content">
