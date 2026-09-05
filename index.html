@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMHAL - Local Home-Service Booking in Nepal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet CSS & JS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+</head>
+<body>
+
+    <!-- POPUP CONTAINER -->
+    <div id="toast-container"></div>
+
+    <!-- SPA HEADER SYSTEM -->
+  <!--
+    Replace ONLY the block from <div id="header-wrapper"> down to its matching
+    closing </div> (right before  DYNAMIC APP CONTENT -->
+
+
+<div id="header-wrapper">
+
+    <!-- VARIANT A: Public -->
+    <nav id="header-public" class="navbar">
+        <div class="container nav-container">
+            <a href="#" onclick="navigateTo('home'); return false;" class="logo brand-logo-group">
+                <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="navigateTo('home'); return false;" class="active">Home</a></li>
+                <li><a href="#" onclick="navigateTo('services'); return false;">Services</a></li>
+                <li><a href="#" onclick="navigateTo('howItWorks'); return false;">How it Works</a></li>
+                <li><a href="#" onclick="navigateTo('becomeProvider'); return false;">Become Provider</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" onclick="navigateTo('login'); return false;" class="login-link">Login</a>
+                <a href="#" onclick="navigateTo('login', {openSignup: true}); return false;" class="btn btn-primary">Get Started</a>
+            </div>
+            <!-- NEW: hamburger, mobile only -->
+            <button type="button" class="mobile-menu-btn" aria-label="Open menu" onclick="openMobileNav('public')">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- VARIANT B: Customer Logged-in -->
+    <nav id="header-customer" class="dashboard-navbar hidden">
+        <div class="container nav-container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+
+            <!-- FIXED: was unclassed inline-style div, now .dash-nav-left -->
+            <div class="dash-nav-left">
+                <a href="#" onclick="navigateTo('dashboard'); return false;" class="logo brand-logo-group">
+                    <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="navigateTo('dashboard'); return false;">Home</a></li>
+                    <li><a href="#" onclick="navigateTo('services'); return false;">Services</a></li>
+                    <li><a href="#" onclick="navigateTo('findProvider'); return false;">Find Provider</a></li>
+                    <li><a href="#" onclick="handleTrackServiceClick(); return false;">Track Service</a></li>
+                </ul>
+            </div>
+
+            <div class="dash-nav-actions">
+
+                <div class="fap-search-bar" style="height: 44px; display: flex; align-items: center; background-color: #EAEDFF; border-radius: 24px; padding: 0 4px 0 16px; border: 1px solid rgba(195, 198, 215, 0.5);">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#505F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <input type="text" id="global-loc-input" placeholder="Butwal" style="border: none; background: transparent; width: 60px; outline: none; font-size: 14px; color: #131B2E; font-family: 'Inter', sans-serif;">
+                    </div>
+                    <div style="width: 1px; height: 20px; background-color: rgba(195, 198, 215, 0.8); margin: 0 12px;"></div>
+                    <input type="text" id="global-query-input" placeholder="Search providers..." onkeydown="if(event.key==='Enter'){ handleHeaderGlobalSearch(); }" style="border: none; background: transparent; width: 160px; outline: none; font-size: 14px; margin-right: 8px; color: #131B2E; font-family: 'Inter', sans-serif;">
+                    <button id="global-search-btn" onclick="handleHeaderGlobalSearch()" type="button" style="width: 36px; height: 36px; border-radius: 50%; background-color: #004AC6; color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </button>
+                </div>
+
+                <!-- FIXED: was unclassed inline-style div, now .dash-notif-wrapper -->
+                <div class="dash-notif-wrapper">
+                    <button id="notification-bell-btn" class="icon-btn" aria-label="Notifications" style="background: transparent; border: none; color: #505F76; cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        <span id="notification-badge" class="notif-badge hidden"></span>
+                    </button>
+                    <div id="notification-dropdown" class="notification-dropdown hidden">
+                        <div class="notif-header"><span>Notifications</span></div>
+                        <div id="notification-list" class="notif-list"></div>
+                    </div>
+                </div>
+
+                <!-- FIXED: was unclassed inline-style div, now .dash-avatar-wrapper -->
+                <div class="dash-avatar-wrapper">
+                    <div id="customer-header-avatar" class="dash-avatar" style="width: 40px; height: 40px; background-color: #E2E7FF; color: #004AC6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; cursor: pointer;">A</div>
+                    <div id="customer-profile-dropdown" style="display: none; position: absolute; right: 0; top: 50px; background: white; border: 1px solid #E2E4EB; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 220px; z-index: 1000; padding: 8px 0; text-align: left;">
+                        <div style="padding: 8px 16px;">
+                            <p id="dropdown-user-name" style="margin: 0; font-weight: 600; color: #131B2E; font-size: 14px;">Aarav</p>
+                            <p id="dropdown-user-email" style="margin: 0; font-size: 12px; color: #737686;">aarav@gmail.com</p>
+                        </div>
+                        <div style="height: 1px; background: #E2E4EB; margin: 4px 0;"></div>
+                        <a href="#" onclick="return false;" style="display: block; padding: 10px 16px; color: #131B2E; text-decoration: none; font-size: 14px;">My Profile</a>
+                        <a href="#" onclick="return false;" style="display: block; padding: 10px 16px; color: #131B2E; text-decoration: none; font-size: 14px;">Settings</a>
+                        <div style="height: 1px; background: #E2E4EB; margin: 4px 0;"></div>
+                        <a href="#" onclick="handleCustomerLogout(); return false;" style="display: block; padding: 10px 16px; color: #BA1A1A; text-decoration: none; font-size: 14px; font-weight: 600;">Logout</a>
+                    </div>
+                </div>
+
+                <!-- NEW: hamburger, mobile only -->
+                <button type="button" class="mobile-menu-btn" aria-label="Open menu" onclick="openMobileNav('customer')">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- VARIANT C: Provider Profile -->
+    <nav id="header-provider" class="navbar hidden">
+        <div class="container nav-container">
+            <a href="#" onclick="navigateTo('providerProfile'); return false;" class="logo brand-logo-group">
+                <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="navigateTo('providerProfile'); return false;">Home</a></li>
+                <li><a href="#" onclick="navigateTo('providerDashboard'); return false;">Dashboard</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" onclick="appState.isLoggedIn=false; appState.role=null; navigateTo('home'); showPopup('Logged out successfully', 'success'); return false;" class="login-link">Logout</a>
+            </div>
+            <!-- NEW: hamburger, mobile only -->
+            <button type="button" class="mobile-menu-btn" aria-label="Open menu" onclick="openMobileNav('provider')">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- VARIANT D: Minimal Provider -->
+    <nav id="header-provider-minimal" class="navbar hidden" style="justify-content: flex-end; padding-right: 20px;">
+        <a href="#" onclick="navigateTo('providerProfile'); return false;" class="logo brand-logo-group">
+            <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+        </a>
+    </nav>
+
+    <!-- NEW: shared mobile nav panel + backdrop, reused by all header variants -->
+    <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+    <div id="mobile-nav-panel" class="mobile-nav-panel">
+        <div class="mobile-nav-header">
+            <span class="brand-logo-group"><img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img"></span>
+            <button type="button" class="mobile-nav-close" aria-label="Close menu" onclick="closeMobileNav()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <ul id="mobile-nav-links" class="mobile-nav-links">
+            <!-- filled dynamically by JS based on which header is active -->
+        </ul>
+        <div id="mobile-nav-actions" class="mobile-nav-actions">
+            <!-- filled dynamically by JS -->
+        </div>
+    </div>
+
+</div>
+
+    <!-- DYNAMIC APP CONTENT -->
+    <main id="app-content">
+        
+        <!-- UNIQUE HOME PAGE CONTENT -->
+        <main id="page-body">
+            <header class="hero">
+                <div class="container hero-container">
+                    <div class="hero-content">
+                        <h1>Find Trusted Services Near You</h1>
+                        <p>From quick repairs to home maintenance, find reliable local professionals and book the help you need.</p>
+                        <div class="hero-buttons">
+                            <a href="#" onclick="if(appState.isLoggedIn) navigateTo('findProvider'); else navigateTo('services'); return false;" class="btn btn-primary">Find a Service</a>
+                            <a href="#" onclick="navigateTo('becomeProvider'); return false;" class="btn btn-outline">Become a Provider</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://placehold.co/600x400/C3C6D7/131B2E?text=Local+Professionals" alt="Service professionals">
+                    </div>
+                </div>
+                
+                <div class="container">
+                    <div class="search-card">
+                        <div class="search-input">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            <input type="text" id="home-search-input" placeholder="What service do you need?">
+                        </div>
+                        <div class="search-divider"></div>
+                        <div class="search-location">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>Butwal, Nepal</span>
+                        </div>
+                        <button class="btn btn-primary search-btn" onclick="executeSearch(document.getElementById('home-search-input').value)">Search</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- POPULAR SERVICES SECTION -->
+            <section class="popular-services">
+                <div class="container">
+                    <h2>Popular Services</h2>
+                    <div class="services-grid">
+                        <div class="service-card" style="cursor:pointer;" onclick="navigateTo('services', { openCategory: 'Electrician' });">
+                            <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg></div>
+                            <span>Electrician</span>
+                        </div>
+                        <div class="service-card" style="cursor:pointer;" onclick="navigateTo('services', { openCategory: 'Plumber' });">
+                            <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+                            <span>Plumber</span>
+                        </div>
+                        <div class="service-card" style="cursor:pointer;" onclick="navigateTo('services', { openCategory: 'Mechanic' });">
+                            <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg></div>
+                            <span>Mechanic</span>
+                        </div>
+                        <div class="service-card" style="cursor:pointer;" onclick="navigateTo('services', { openCategory: 'Cleaner' });">
+                            <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg></div>
+                            <span>Cleaner</span>
+                        </div>
+                        <div class="service-card" style="cursor:pointer;" onclick="navigateTo('services', { openCategory: 'Carpenter' });">
+                            <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"/></svg></div>
+                            <span>Carpenter</span>
+                        </div>
+                        <div class="service-card" style="cursor:pointer;" onclick="navigateTo('services', { openCategory: 'Painter' });">
+                            <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="16" height="6" rx="2"/><path d="M10 16v-2a2 2 0 0 1 2-2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="8" y="16" width="4" height="6" rx="1"/></svg></div>
+                            <span>Painter</span>
+                        </div>
+                        <div class="service-card" style="cursor:pointer;" onclick="navigateTo('services', { openCategory: 'Home Shifting' });">
+                            <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
+                            <span>Home Shifting</span>
+                        </div>
+                        <div class="service-card" style="cursor:pointer;" onclick="navigateTo('services', { openCategory: 'Appliance Repair' });">
+                            <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg></div>
+                            <span>Appliance Repair</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="testimonials">
+                <div class="container">
+                    <div class="testimonials-header">
+                        <h2>What Our Customers Say</h2>
+                        <p>Real experiences from people who found reliable help through SAMHAL.</p>
+                    </div>
+                    
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card">
+                            <div class="author">
+                                <div class="avatar bg-blue">RA</div>
+                                <div class="author-info">
+                                    <h4>Ramesh Adhikari</h4>
+                                    <span>Butwal, Nepal</span>
+                                </div>
+                            </div>
+                            <div class="stars">
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div class="service-tag">Service: Electrician</div>
+                            <p class="quote">"The electrician arrived right on time and fixed our wiring issues quickly. Very professional and highly recommended!"</p>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="author">
+                                <div class="avatar bg-navy">ST</div>
+                                <div class="author-info">
+                                    <h4>Sita Thapa</h4>
+                                    <span>Kathmandu, Nepal</span>
+                                </div>
+                            </div>
+                            <div class="stars">
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div class="service-tag">Service: Cleaner</div>
+                            <p class="quote">"Excellent deep cleaning service. My house looks brand new. The staff was polite and very thorough with their work."</p>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="author">
+                                <div class="avatar bg-green">BK</div>
+                                <div class="author-info">
+                                    <h4>Binod KC</h4>
+                                    <span>Pokhara, Nepal</span>
+                                </div>
+                            </div>
+                            <div class="stars">
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-empty" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div class="service-tag">Service: Plumber</div>
+                            <p class="quote">"Had a major leak at midnight and found a plumber through SAMHAL within minutes. Saved us from a lot of water damage!"</p>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="author">
+                                <div class="avatar bg-blue">MG</div>
+                                <div class="author-info">
+                                    <h4>Maya Gurung</h4>
+                                    <span>Lalitpur, Nepal</span>
+                                </div>
+                            </div>
+                            <div class="stars">
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div class="service-tag">Service: Computer Repair</div>
+                            <p class="quote">"Fast and reliable laptop repair. They explained the issue clearly and the price was very reasonable compared to others."</p>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="author">
+                                <div class="avatar bg-navy">DP</div>
+                                <div class="author-info">
+                                    <h4>Deepak Pandey</h4>
+                                    <span>Butwal, Nepal</span>
+                                </div>
+                            </div>
+                            <div class="stars">
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg class="star-filled" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div class="service-tag">Service: Painter</div>
+                            <p class="quote">"The painting crew was incredibly efficient and clean. They finished our living room in just one day with perfect results."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="container footer-container">
+                <div class="footer-left">
+                    <a href="#" onclick="navigateTo('home'); return false;" class="logo brand-logo-group">
+                        <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+                    </a>
+                    <p class="tagline">Your trusted platform for local, reliable service professionals.</p>
+                    <p class="copyright">&copy; 2026 SAMHAL Services Nepal. All rights reserved.</p>
+                </div>
+                <div class="footer-right">
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="return false;">About Us</a></li>
+                        <li><a href="#" onclick="return false;">Contact Support</a></li>
+                        <li><a href="#" onclick="return false;">Privacy Policy</a></li>
+                        <li><a href="#" onclick="return false;">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- GLOBAL SIGN UP MODAL -->
+    <div id="global-signup-modal" style="display: none; position: fixed; inset: 0; background-color: rgba(19, 27, 46, 0.7); align-items: center; justify-content: center; z-index: 100000; padding: 16px;">
+        <div style="background-color: #FFFFFF; color: #131B2E; width: 100%; max-width: 440px; border-radius: 14px; padding: 22px 24px; position: relative; max-height: 96vh; overflow-y: auto; box-sizing: border-box; box-shadow: 0 20px 40px rgba(0,0,0,0.25);">
+            
+            <button type="button" onclick="closeSignupModal()" style="position: absolute; top: 14px; right: 14px; background: none; border: none; color: #737686; font-size: 22px; cursor: pointer; line-height: 1;">&times;</button>
+            
+            <div style="margin-bottom: 14px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin: 0 0 4px 0; font-family: 'Inter', sans-serif;">Create Your Account</h2>
+                <p style="color: #434655; font-size: 13px; margin: 0; font-family: 'Inter', sans-serif;">Join SAMHAL to book trusted local services.</p>
+            </div>
+
+            <!-- Role Switcher -->
+            <div style="display: flex; gap: 10px; margin-bottom: 14px;">
+                <div id="modal-role-cust" style="cursor: pointer; flex: 1; border: 2px solid #004AC6; background-color: rgba(219, 225, 255, 0.3); border-radius: 8px; padding: 8px; display: flex; align-items: center; justify-content: center;" onclick="selectSignupRole('customer')">
+                    <span style="font-weight: 700; font-size: 13px; font-family: 'Inter', sans-serif; color: #004AC6;">Customer</span>
+                </div>
+                <div id="modal-role-prov" style="cursor: pointer; flex: 1; border: 1px solid #C3C6D7; background-color: #FFFFFF; border-radius: 8px; padding: 8px; display: flex; align-items: center; justify-content: center;" onclick="selectSignupRole('provider')">
+                    <span style="font-weight: 700; font-size: 13px; font-family: 'Inter', sans-serif; color: #505F76;">Provider</span>
+                </div>
+            </div>
+
+            <!-- Native Validated HTML5 Form -->
+            <form id="global-signup-form" onsubmit="handleGlobalSignup(event)" style="display: flex; flex-direction: column; gap: 10px;">
+                <div>
+                    <label for="signup-name" style="color: #505F76; font-size: 12px; font-weight: 700; margin-bottom: 4px; display: block; font-family: 'Inter', sans-serif;">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="signup-name" 
+                        name="fullname" 
+                        placeholder="Enter your full name" 
+                        required 
+                        minlength="2" 
+                        autocomplete="name"
+                        style="width: 100%; border: 1px solid #C3C6D7; border-radius: 6px; padding: 9px 12px; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box; outline: none;"
+                    >
+                </div>
+
+                <div>
+                    <label for="signup-email" style="color: #505F76; font-size: 12px; font-weight: 700; margin-bottom: 4px; display: block; font-family: 'Inter', sans-serif;">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="signup-email" 
+                        name="email" 
+                        placeholder="example@gmail.com" 
+                        required 
+                        autocomplete="email"
+                        style="width: 100%; border: 1px solid #C3C6D7; border-radius: 6px; padding: 9px 12px; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box; outline: none;"
+                    >
+                </div>
+
+                <div>
+                    <label for="signup-phone" style="color: #505F76; font-size: 12px; font-weight: 700; margin-bottom: 4px; display: block; font-family: 'Inter', sans-serif;">Phone Number</label>
+                    <input 
+                        type="tel" 
+                        id="signup-phone" 
+                        name="phone" 
+                        placeholder="10-digit mobile number (e.g. 98XXXXXXXX)" 
+                        required 
+                        pattern="[0-9]{10}" 
+                        maxlength="10" 
+                        title="Please enter a valid 10-digit mobile number"
+                        autocomplete="tel"
+                        style="width: 100%; border: 1px solid #C3C6D7; border-radius: 6px; padding: 9px 12px; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box; outline: none;"
+                    >
+                </div>
+
+                <div>
+                    <label for="signup-password" style="color: #505F76; font-size: 12px; font-weight: 700; margin-bottom: 4px; display: block; font-family: 'Inter', sans-serif;">Password</label>
+                    <input 
+                        type="password" 
+                        id="signup-password" 
+                        name="password" 
+                        placeholder="Create a password (min. 4 characters)" 
+                        required 
+                        minlength="4" 
+                        autocomplete="new-password"
+                        style="width: 100%; border: 1px solid #C3C6D7; border-radius: 6px; padding: 9px 12px; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box; outline: none;"
+                    >
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+                    <input type="checkbox" id="signup-terms" required style="cursor: pointer; width: 15px; height: 15px; accent-color: #004AC6;">
+                    <label for="signup-terms" style="color: #434655; font-size: 12px; font-family: 'Inter', sans-serif; cursor: pointer;">
+                        I agree to the <a href="#" onclick="return false;" style="color: #2563EB; font-weight: 600; text-decoration: none;">Terms</a> and <a href="#" onclick="return false;" style="color: #2563EB; font-weight: 600; text-decoration: none;">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" style="width: 100%; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 700; border: none; cursor: pointer; background-color: #004AC6; color: #FFFFFF; font-family: 'Inter', sans-serif; margin-top: 6px;">Create Account</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 14px; color: #434655; font-size: 13px; font-family: 'Inter', sans-serif;">
+                Already have an account? <a href="#" onclick="closeSignupModal(); navigateTo('login'); return false;" style="color: #2563EB; font-weight: 600; text-decoration: none;">Log in</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<main id="page-body" class="dashboard-main">
+    <div class="container">
+        
+        <!-- Welcome + Search Section -->
+        <section class="dash-section welcome-section">
+         <h1 id="dash-welcome-heading" class="welcome-heading">Welcome back, Aarav! 👋</h1>
+            <p class="welcome-subtext">What service do you need today in Butwal?</p>
+            
+            <div class="dash-search-bar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="dashboard-search-input" placeholder="Search for AC repair, plumbing, cleaning..." class="dash-search-input">
+                <button class="btn btn-primary pill-btn" onclick="handleDashboardSearch()">Search</button>
+            </div>
+        </section>
+
+        <!-- Active Booking Section -->
+        <section class="dash-section">
+            <h2 class="section-title">Active Booking</h2>
+            <div id="active-booking-container">
+                <!-- JS will inject the empty state or the active card here -->
+            </div>
+        </section>
+
+        <!-- Categories Section (All 8) -->
+        <!-- Categories Section (All 8) -->
+        <section class="dash-section">
+            <h2 class="section-title">Categories</h2>
+            <div class="services-grid">
+                <div class="service-card" style="cursor: pointer;" onclick="navigateTo('services', { openCategory: 'Electrician' })">
+                    <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg></div>
+                    <span>Electrician</span>
+                </div>
+                <div class="service-card" style="cursor: pointer;" onclick="navigateTo('services', { openCategory: 'Plumber' })">
+                    <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+                    <span>Plumber</span>
+                </div>
+                <div class="service-card" style="cursor: pointer;" onclick="navigateTo('services', { openCategory: 'Mechanic' })">
+                    <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg></div>
+                    <span>Mechanic</span>
+                </div>
+                <div class="service-card" style="cursor: pointer;" onclick="navigateTo('services', { openCategory: 'Cleaner' })">
+                    <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg></div>
+                    <span>Cleaning</span>
+                </div>
+                <div class="service-card" style="cursor: pointer;" onclick="navigateTo('services', { openCategory: 'Carpenter' })">
+                    <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"/></svg></div>
+                    <span>Carpentry</span>
+                </div>
+                <div class="service-card" style="cursor: pointer;" onclick="navigateTo('services', { openCategory: 'Painter' })">
+                    <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="16" height="6" rx="2"/><path d="M10 16v-2a2 2 0 0 1 2-2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="8" y="16" width="4" height="6" rx="1"/></svg></div>
+                    <span>Painter</span>
+                </div>
+                <div class="service-card" style="cursor: pointer;" onclick="navigateTo('services', { openCategory: 'Home Shifting' })">
+                    <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
+                    <span>Home Shifting</span>
+                </div>
+                <div class="service-card" style="cursor: pointer;" onclick="navigateTo('services', { openCategory: 'Appliance Repair' })">
+                    <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg></div>
+                    <span>Appliance Repair</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Bookings Section -->
+        <section class="dash-section">
+            <h2 class="section-title">Recent Bookings</h2>
+            <div class="booking-list" id="recent-bookings-list">
+                <!-- JS will inject the seeded bookings here -->
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container footer-container">
+        <div class="footer-left">
+                                <a href="#" onclick="navigateTo('home'); return false;" class="logo brand-logo-group">
+    <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+</a>
+            <p class="tagline">Your trusted platform for local, reliable service professionals.</p>
+            <p class="copyright">&copy; 2026 SAMHAL Services Nepal. All rights reserved.</p>
+        </div>
+        <div class="footer-right">
+            <ul class="footer-links">
+                <li><a href="#" onclick="return false;">About Us</a></li>
+                <li><a href="#" onclick="return false;">Contact Support</a></li>
+                <li><a href="#" onclick="return false;">Privacy Policy</a></li>
+                <li><a href="#" onclick="return false;">Terms of Service</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>

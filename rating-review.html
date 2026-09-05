@@ -1,0 +1,75 @@
+<!-- RATING & REVIEW OVERLAY -->
+<div id="page-body" class="review-body" style="min-height: 100vh; background-color: #F8F9FC; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+    
+    <main class="review-layout" style="width: 100%; max-width: 500px;">
+        <!-- Main Centered Card -->
+        <div class="review-card" style="background: white; border-radius: 16px; padding: 40px; box-shadow: 0 10px 30px rgba(19, 27, 46, 0.08);">
+            
+            <!-- 1. Top Banner -->
+            <div class="review-banner" style="text-align: center; margin-bottom: 32px;">
+                <h1 class="review-title" style="font-size: 24px; font-weight: 700; color: #131B2E; margin: 0 0 8px 0;">Rate Your Service</h1>
+                <p class="review-subtext" style="color: #505F76; font-size: 14px; margin: 0;">Your feedback helps us improve SAMHAL.</p>
+            </div>
+
+            <div class="review-content">
+                
+                <!-- 2. Service Info Row -->
+                <div class="review-service-info" style="display: flex; align-items: center; gap: 16px; background: #F8F9FC; padding: 16px; border-radius: 12px; margin-bottom: 32px;">
+                    <div class="review-icon-circle" style="width: 48px; height: 48px; background: #E2E7FF; color: #004AC6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
+                    <div class="review-service-text">
+                        <h2 id="review-service-name" class="review-service-name" style="font-size: 16px; font-weight: 600; color: #131B2E; margin: 0 0 4px 0;">Service Name</h2>
+                        <p id="review-service-meta" class="review-service-meta" style="font-size: 13px; color: #505F76; margin: 0;">by Provider &middot; Date</p>
+                    </div>
+                </div>
+
+                <!-- 3. Rating Question -->
+                <div class="review-rating-section" style="text-align: center; margin-bottom: 32px;">
+                    <h3 id="review-question" class="review-question" style="font-size: 16px; font-weight: 600; color: #131B2E; margin: 0 0 16px 0;">How was your experience?</h3>
+                    <div class="review-stars" id="interactive-stars" style="display: flex; justify-content: center; gap: 8px; margin-bottom: 8px; cursor: pointer;">
+                        <!-- SVGs default to outline stroke, no fill -->
+                        <svg data-val="1" class="star-interactive" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C3C6D7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: all 0.2s;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg data-val="2" class="star-interactive" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C3C6D7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: all 0.2s;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg data-val="3" class="star-interactive" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C3C6D7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: all 0.2s;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg data-val="4" class="star-interactive" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C3C6D7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: all 0.2s;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg data-val="5" class="star-interactive" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C3C6D7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: all 0.2s;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <p class="review-star-hint" style="font-size: 13px; color: #737686; margin: 0;">Tap a star to rate</p>
+                </div>
+
+                <!-- 4. Textarea -->
+                <div class="review-form-group" style="margin-bottom: 24px;">
+                    <label class="review-label" style="display: block; font-size: 14px; font-weight: 600; color: #131B2E; margin-bottom: 8px;">Share more details about the service (Optional)</label>
+                    <textarea class="review-textarea" placeholder="What did you like? What could be improved?" style="width: 100%; min-height: 100px; padding: 12px; border: 1px solid #C3C6D7; border-radius: 8px; font-family: inherit; font-size: 14px; resize: vertical; outline: none;"></textarea>
+                </div>
+
+                <!-- 5. Add Photo (Interactive Dropzone) -->
+                <div class="review-form-group" style="margin-bottom: 32px;">
+                    <label class="review-label" style="display: block; font-size: 14px; font-weight: 600; color: #131B2E; margin-bottom: 8px;">Add a photo (Optional)</label>
+                    
+                    <!-- Drag-and-drop & Click Upload Box -->
+                    <label id="review-photo-dropzone" for="review-photo-upload" class="review-upload-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed #C3C6D7; border-radius: 8px; padding: 24px; cursor: pointer; transition: all 0.2s; background: #F8F9FC;">
+                        <input type="file" id="review-photo-upload" accept="image/png, image/jpeg" multiple style="display: none;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#737686" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 8px;"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                        <span class="upload-text" style="font-size: 14px; color: #505F76; font-weight: 500;">Click to upload or drag & drop</span>
+                    </label>
+                    
+                    <!-- Preview Container for Thumbnails -->
+                    <div id="review-photo-preview" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;"></div>
+                </div>
+
+                <!-- 6. Divider -->
+                <div class="review-divider" style="height: 1px; background: #E2E4EB; margin-bottom: 24px;"></div>
+
+                <!-- 7 & 8. Actions -->
+                <button id="review-submit-btn" class="review-submit-btn btn-primary" style="width: 100%; padding: 14px; border-radius: 8px; border: none; background: #004AC6; color: white; font-weight: 600; font-size: 16px; cursor: pointer; margin-bottom: 16px;">Submit Review</button>
+                
+                <div style="text-align: center;">
+                    <a href="#" onclick="navigateTo('dashboard'); return false;" class="review-skip-link" style="color: #737686; text-decoration: none; font-size: 14px; font-weight: 500;">Skip for now</a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>

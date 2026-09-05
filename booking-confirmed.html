@@ -1,0 +1,90 @@
+<!-- BOOKING CONFIRMED OVERLAY -->
+<div id="page-body" class="overlay-body">
+    <div class="overlay-page-wrapper confirmation-wrapper" style="min-height: 100vh; background-color: #F8F9FC; display: flex; flex-direction: column;">
+        
+        <!-- TOP BAR -->
+        <header class="overlay-topbar" style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: white; border-bottom: 1px solid #E2E4EB;">
+            <a href="#" onclick="navigateTo('dashboard'); return false;" class="brand-logo-group" style="text-decoration: none; display: flex; align-items: center;">
+                <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img" style="height: 36px; width: auto; object-fit: contain;">
+            </a>
+            <button class="icon-btn close-btn" aria-label="Close" onclick="navigateTo('dashboard')" style="background: transparent; border: none; cursor: pointer; color: #505F76; display: flex; align-items: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+            </button>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="confirmation-main" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+            <div class="confirmation-card" style="background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(19,27,46,0.06); width: 100%; max-width: 480px; text-align: center;">
+                
+                <!-- Success Checkmark -->
+                <div class="success-icon-glow" style="width: 80px; height: 80px; background: #E8F5E9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+
+                <h1 class="conf-title" style="font-size: 24px; font-weight: 700; color: #131B2E; margin-bottom: 8px;">Booking Confirmed!</h1>
+                <p class="conf-subtext" style="color: #505F76; font-size: 14px; margin-bottom: 32px;">Your request has been successfully placed. A provider will be assigned shortly.</p>
+
+                <!-- Booking Details Box -->
+                <div class="conf-details-box" style="background: #F8F9FC; border: 1px solid #E2E4EB; border-radius: 8px; padding: 20px; text-align: left; margin-bottom: 32px;">
+                    <div class="conf-id-row" style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                        <span class="conf-label" style="color: #505F76; font-size: 14px; font-weight: 600;">Booking ID</span>
+                        <span id="conf-id" class="conf-id-value" style="color: #131B2E; font-size: 14px; font-weight: 700;">SAM-20481</span>
+                    </div>
+                    
+                    <div class="conf-divider" style="height: 1px; background: #E2E4EB; margin-bottom: 16px;"></div>
+                    
+                    <div class="conf-info-list" style="display: flex; flex-direction: column; gap: 16px;">
+                        <!-- Provider -->
+                        <div class="conf-info-item" style="display: flex; gap: 12px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#505F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <div class="conf-info-text" style="display: flex; flex-direction: column;">
+                                <span class="conf-label-sm" style="font-size: 12px; color: #737686; font-weight: 600; text-transform: uppercase;">Provider</span>
+                                <span id="conf-provider" class="conf-value" style="font-size: 14px; color: #131B2E; font-weight: 600;">Suman Technical Services</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Service -->
+                        <div class="conf-info-item" style="display: flex; gap: 12px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#505F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                            <div class="conf-info-text" style="display: flex; flex-direction: column;">
+                                <span class="conf-label-sm" style="font-size: 12px; color: #737686; font-weight: 600; text-transform: uppercase;">Service</span>
+                                <span id="conf-service" class="conf-value" style="font-size: 14px; color: #131B2E; font-weight: 600;">AC Repair</span>
+                            </div>
+                        </div>
+
+                        <!-- Date & Time -->
+                        <div class="conf-info-item" style="display: flex; gap: 12px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#505F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            <div class="conf-info-text" style="display: flex; flex-direction: column;">
+                                <span class="conf-label-sm" style="font-size: 12px; color: #737686; font-weight: 600; text-transform: uppercase;">Date & Time</span>
+                                <span id="conf-date" class="conf-value" style="font-size: 14px; color: #131B2E; font-weight: 600;">12 Aug 2026, 11:30 AM</span>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="conf-info-item" style="display: flex; gap: 12px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#505F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <div class="conf-info-text" style="display: flex; flex-direction: column;">
+                                <span class="conf-label-sm" style="font-size: 12px; color: #737686; font-weight: 600; text-transform: uppercase;">Location</span>
+                                <span id="conf-location" class="conf-value" style="font-size: 14px; color: #131B2E; font-weight: 600;">Butwal, Nepal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="conf-actions" style="display: flex; flex-direction: column; gap: 12px; margin-top: 24px;">
+                    <button onclick="navigateTo('liveTrackingCustomer')" class="btn btn-primary" style="width: 100%; min-height: 48px; padding: 12px 16px; border-radius: 8px; border: none; background: #004AC6; color: #FFFFFF; font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                        <span>Track Provider</span>
+                    </button>
+                    <button onclick="navigateTo('bookingReceipt')" class="btn btn-outline" style="width: 100%; min-height: 48px; padding: 12px 16px; border-radius: 8px; border: 1px solid #C3C6D7; background: #FFFFFF; color: #131B2E; font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+                        <span>View My Bookings</span>
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>

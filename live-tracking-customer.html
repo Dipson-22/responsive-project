@@ -1,0 +1,113 @@
+<!-- LIVE TRACKING OVERLAY -->
+<div id="page-body" class="tracking-body" style="height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #F8F9FC;">
+
+    <!-- TOP BAR -->
+ 
+
+    <!-- MAIN LAYOUT -->
+    <div class="tracking-layout" style="display: flex; flex: 1; overflow: hidden;">
+        
+        <!-- LEFT: Map Column -->
+        <div class="tracking-map-col" style="flex: 1; position: relative;">
+            <!-- Floating Badge -->
+            <div class="map-floating-badge" style="position: absolute; top: 24px; left: 24px; z-index: 1000; background: white; padding: 12px 20px; border-radius: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; color: #131B2E;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Arriving in 12 min</span>
+            </div>
+            
+            <!-- Map Container -->
+            <div id="tracking-map" style="width: 100%; height: 100%; z-index: 1;"></div>
+        </div>
+
+        <!-- RIGHT: Sidebar -->
+        <aside class="tracking-sidebar" style="width: 400px; background: white; border-left: 1px solid #E2E4EB; padding: 32px; display: flex; flex-direction: column; overflow-y: auto;">
+            <h1 class="tracking-heading" style="font-size: 24px; font-weight: 700; color: #131B2E; margin-bottom: 24px;">Live Tracking</h1>
+
+            <!-- Provider Mini-Card -->
+            <div class="tracking-provider-card" style="border: 1px solid #E2E4EB; border-radius: 12px; padding: 20px; margin-bottom: 32px;">
+                <div class="tp-info-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                    <img id="track-provider-avatar" src="https://picsum.photos/100" alt="Provider" class="tp-avatar" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover;">
+                    <div class="tp-details">
+                        <h2 id="track-provider-name" class="tp-name" style="font-size: 16px; font-weight: 600; color: #131B2E; margin: 0 0 4px 0;">Suman Technical Services</h2>
+                        <div class="tp-rating" style="display: flex; align-items: center; gap: 4px; font-size: 13px; color: #505F76;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <span id="track-provider-rating">4.8 (124 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tp-actions" style="display: flex; gap: 12px;">
+                    <button class="tp-btn btn-call" style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: #004AC6; color: white; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Call
+                    </button>
+                    <button class="tp-btn btn-message" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #C3C6D7; background: transparent; color: #131B2E; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Message
+                    </button>
+                </div>
+            </div>
+
+            <!-- Booking Progress Stepper -->
+            <div class="tracking-progress-section">
+                <h2 class="progress-heading" style="font-size: 16px; font-weight: 700; color: #131B2E; margin-bottom: 24px;">Booking Progress</h2>
+                
+                <div class="stepper-container" style="position: relative; display: flex; flex-direction: column; gap: 24px;">
+                    <div class="stepper-line" style="position: absolute; left: 15px; top: 16px; bottom: 30px; width: 2px; background: #E2E4EB; z-index: 1;"></div>
+                    <div class="stepper-line-active" style="position: absolute; left: 15px; top: 16px; height: 50%; width: 2px; background: #004AC6; z-index: 2;"></div>
+                    
+                    <!-- Step 1: Confirmed (Completed) -->
+                    <div class="step-item completed" style="display: flex; gap: 20px; position: relative; z-index: 3;">
+                        <div class="step-indicator" style="width: 32px; height: 32px; background: #004AC6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title" style="font-size: 15px; font-weight: 600; color: #131B2E; margin: 0 0 4px 0;">Booking confirmed</h3>
+                            <p class="step-time" style="font-size: 13px; color: #737686; margin: 0;">10:45 AM</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Accepted (Completed) -->
+                    <div class="step-item completed" style="display: flex; gap: 20px; position: relative; z-index: 3;">
+                        <div class="step-indicator" style="width: 32px; height: 32px; background: #004AC6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title" style="font-size: 15px; font-weight: 600; color: #131B2E; margin: 0 0 4px 0;">Provider accepted</h3>
+                            <p class="step-time" style="font-size: 13px; color: #737686; margin: 0;">10:52 AM</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: On the way (Active) -->
+                    <div class="step-item active" style="display: flex; gap: 20px; position: relative; z-index: 3;">
+                        <div class="step-indicator" style="width: 32px; height: 32px; background: white; border: 2px solid #004AC6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <div class="step-dot" style="width: 12px; height: 12px; background: #004AC6; border-radius: 50%;"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title" style="font-size: 15px; font-weight: 700; color: #131B2E; margin: 0 0 4px 0;">Provider is on the way</h3>
+                            <p class="step-subtext" style="font-size: 13px; color: #004AC6; font-weight: 500; margin: 0;">Currently en route</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Arrived (Upcoming) -->
+                    <div class="step-item upcoming" style="display: flex; gap: 20px; position: relative; z-index: 3; opacity: 0.5;">
+                        <div class="step-indicator" style="width: 32px; height: 32px; background: white; border: 2px solid #C3C6D7; border-radius: 50%; flex-shrink: 0;"></div>
+                        <div class="step-content" style="display: flex; align-items: center;">
+                            <h3 class="step-title" style="font-size: 15px; font-weight: 500; color: #505F76; margin: 0;">Provider arrived</h3>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Completed (Upcoming) -->
+                    <div class="step-item upcoming" style="display: flex; gap: 20px; position: relative; z-index: 3; opacity: 0.5;">
+                        <div class="step-indicator" style="width: 32px; height: 32px; background: white; border: 2px solid #C3C6D7; border-radius: 50%; flex-shrink: 0;"></div>
+                        <div class="step-content" style="display: flex; align-items: center;">
+                            <h3 class="step-title" style="font-size: 15px; font-weight: 500; color: #505F76; margin: 0;">Service completed</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </aside>
+    </div>
+</div>

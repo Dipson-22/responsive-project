@@ -1,0 +1,153 @@
+<!-- PROVIDER DASHBOARD PAGE -->
+<div id="page-body" class="pd-body">
+
+    <div class="pd-layout">
+        
+        <!-- LEFT SIDEBAR -->
+        <aside class="pd-sidebar">
+            <div class="pd-sidebar-top">
+                <div class="pd-profile-header">
+                    <img src="https://picsum.photos/100?random=10" alt="Avatar" class="pd-avatar">
+                    <div class="pd-profile-text">
+                        <h2 class="pd-profile-title" id="pd-provider-name">Suman Technical</h2>
+                        <p class="pd-profile-subtitle">Manage your services</p>
+                    </div>
+                </div>
+
+                <button class="pd-online-btn" id="pd-toggle-online-btn" onclick="toggleProviderOnlineStatus()">
+                    <span class="pd-status-dot" id="pd-status-dot"></span>
+                    <span id="pd-status-text">Go Online</span>
+                </button>
+
+                <nav class="pd-nav">
+                    <a href="#" onclick="navigateTo('providerDashboard'); return false;" class="pd-nav-item active">
+                        <i data-lucide="layout-dashboard"></i> Dashboard
+                    </a>
+                    <a href="#" onclick="showPopup('Active jobs feature coming soon!', 'info'); return false;" class="pd-nav-item">
+                        <i data-lucide="briefcase"></i> Active Jobs
+                    </a>
+                    <a href="#" onclick="showPopup('Earnings summary view coming soon!', 'info'); return false;" class="pd-nav-item">
+                        <i data-lucide="wallet"></i> Earnings
+                    </a>
+                    <a href="#" onclick="showPopup('Reviews view coming soon!', 'info'); return false;" class="pd-nav-item">
+                        <i data-lucide="star"></i> Reviews
+                    </a>
+                    <a href="#" onclick="showPopup('Support chat coming soon!', 'info'); return false;" class="pd-nav-item">
+                        <i data-lucide="help-circle"></i> Support
+                    </a>
+                </nav>
+            </div>
+
+            <div class="pd-sidebar-spacer"></div>
+
+            <div class="pd-sidebar-bottom">
+                <div class="pd-sidebar-divider"></div>
+                <nav class="pd-nav">
+                    <a href="#" onclick="showPopup('Settings panel coming soon!', 'info'); return false;" class="pd-nav-item">
+                        <i data-lucide="settings"></i> Settings
+                    </a>
+                    <a href="#" onclick="handleProviderLogout(); return false;" class="pd-nav-item">
+                        <i data-lucide="log-out"></i> Logout
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="pd-main">
+            
+            <header class="pd-main-header">
+                <div class="pd-header-text">
+                    <h1 id="pd-welcome-heading">Welcome back Suman</h1>
+                    <p>Here is what's happening with your services today.</p>
+                </div>
+                <button class="pd-today-btn" onclick="showPopup('Showing data for Today', 'info')">
+                    <i data-lucide="calendar"></i>
+                    Today
+                </button>
+            </header>
+
+            <div class="pd-stats-grid">
+                <div class="pd-stat-card">
+                    <div class="pd-icon-box box-blue"><i data-lucide="briefcase"></i></div>
+                    <div class="pd-stat-info">
+                        <span class="pd-stat-label">Today's Jobs</span>
+                        <span class="pd-stat-value">4</span>
+                    </div>
+                </div>
+                <div class="pd-stat-card">
+                    <div class="pd-icon-box box-red"><i data-lucide="clipboard-clock"></i></div>
+                    <div class="pd-stat-info">
+                        <span class="pd-stat-label">Pending Requests</span>
+                        <span class="pd-stat-value">3</span>
+                    </div>
+                </div>
+                <div class="pd-stat-card">
+                    <div class="pd-icon-box box-blue"><i data-lucide="credit-card"></i></div>
+                    <div class="pd-stat-info">
+                        <span class="pd-stat-label">Monthly Earnings</span>
+                        <span class="pd-stat-value">Rs. 48,500</span>
+                    </div>
+                </div>
+                <div class="pd-stat-card">
+                    <div class="pd-icon-box box-yellow"><i data-lucide="star"></i></div>
+                    <div class="pd-stat-info">
+                        <span class="pd-stat-label">Rating</span>
+                        <span class="pd-stat-value pd-rating-val">4.8 <span class="pd-rating-total">/ 5.0</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pd-content-grid">
+                <div class="pd-card pd-chart-col">
+                    <div class="pd-card-header">
+                        <h2 class="pd-card-title">Weekly Earnings</h2>
+                        <button class="pd-icon-btn" aria-label="Menu" onclick="showPopup('Chart options', 'info')"><i data-lucide="more-horizontal"></i></button>
+                    </div>
+                    <div class="pd-chart-container">
+                        <div class="pd-chart-y-axis"><span>15k</span><span>10k</span><span>5k</span><span>0</span></div>
+                        <div class="pd-chart-area">
+                            <div class="pd-grid-lines"><div class="pd-grid-line"></div><div class="pd-grid-line"></div><div class="pd-grid-line"></div><div class="pd-grid-line"></div></div>
+                            <svg class="pd-svg-chart" viewBox="0 0 500 200" preserveAspectRatio="none">
+                                <path d="M 0 160 C 100 160, 150 90, 250 110 C 350 130, 400 40, 500 20" fill="none" stroke="#2563EB" stroke-width="5" stroke-linecap="round"/>
+                                <circle cx="250" cy="110" r="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="3" />
+                                <circle cx="125" cy="120" r="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="3" />
+                                <circle cx="500" cy="20" r="7" fill="#2563EB" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="pd-chart-x-axis"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+                </div>
+
+                <div class="pd-card pd-requests-col">
+                    <div class="pd-card-header">
+                        <h2 class="pd-card-title">Requests</h2>
+                        <span class="pd-badge-new">3 New</span>
+                    </div>
+                    <div class="pd-requests-list" id="pd-requests-container">
+                        <div class="pd-request-item" id="req-1">
+                            <div class="pd-req-top"><span class="pd-req-cat">AC REPAIR</span><span class="pd-req-price">Rs. 1,000</span></div>
+                            <h3 class="pd-req-name">Aarav Sharma</h3>
+                            <div class="pd-req-meta"><i data-lucide="map-pin"></i><span>Butwal, Milan Chowk</span></div>
+                            <div class="pd-req-actions">
+                                <button class="pd-req-btn pd-btn-decline" onclick="handleDeclineJob('req-1')">Decline</button>
+                                <button class="pd-req-btn pd-btn-accept" onclick="handleAcceptJob('req-1', 'Aarav Sharma', 'AC Repair')">Accept</button>
+                            </div>
+                        </div>
+                        <div class="pd-request-item" id="req-2">
+                            <div class="pd-req-top"><span class="pd-req-cat">PLUMBING</span><span class="pd-req-price">Rs. 800</span></div>
+                            <h3 class="pd-req-name">Sita Magar</h3>
+                            <div class="pd-req-meta"><i data-lucide="clock"></i><span>Today, 4:00 PM</span></div>
+                            <div class="pd-req-actions">
+                                <button class="pd-req-btn pd-btn-decline" onclick="handleDeclineJob('req-2')">Decline</button>
+                                <button class="pd-req-btn pd-btn-accept" onclick="handleAcceptJob('req-2', 'Sita Magar', 'Plumbing')">Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pd-req-divider"></div>
+                    <a href="#" onclick="showPopup('Showing all pending requests', 'info'); return false;" class="pd-view-all">View All Requests</a>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

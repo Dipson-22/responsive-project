@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Tracking (Provider) - SAMHAL</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="tracking-body">
+
+    <header class="tracking-topbar">
+        <div class="tracking-topbar-inner">
+            <div class="tracking-top-left">
+                <button class="tracking-back-btn" aria-label="Go Back">
+                    <i data-lucide="arrow-left"></i>
+                </button>
+                <div class="brand-logo-group">
+                    <i data-lucide="hexagon" class="brand-icon"></i>
+                    <span class="brand-text">SAMHAL</span>
+                </div>
+            </div>
+
+            <nav class="tracking-nav">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="live-tracking-provider.html" class="nav-item active">Track Service</a>
+            </nav>
+
+            <div class="tracking-top-right">
+                <button class="icon-btn" aria-label="Notifications">
+                    <i data-lucide="bell"></i>
+                </button>
+                <button class="icon-btn" aria-label="User Profile">
+                    <i data-lucide="user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="tracking-layout">
+        
+        <div class="tracking-map-col" style="display: flex; flex-direction: column;">
+            
+            <div class="map-header-bar">
+                <div class="mh-left">
+                    <i data-lucide="minus"></i>
+                    <span>Live Tracking</span>
+                </div>
+                <div class="mh-right">BUTWAL, NEPAL</div>
+            </div>
+
+            <div style="flex: 1; position: relative;">
+                <button class="map-locate-btn" aria-label="Center Map">
+                    <i data-lucide="crosshair"></i>
+                </button>
+
+                <div class="map-landmark-badge">
+                    New Bus Park, Butwal
+                </div>
+                
+                <div id="tracking-map"></div>
+            </div>
+        </div>
+
+        <aside class="tracking-sidebar">
+            
+            <div class="eta-header-block">
+                <h1 class="eta-title">
+                    Arriving in <span class="eta-highlight">12 mins</span>
+                </h1>
+                <div class="eta-subtitle">
+                    <i data-lucide="map-pin" class="icon-sm"></i>
+                    <span>2.4 km away &middot; Butwal route</span>
+                </div>
+            </div>
+
+            <div class="tracking-customer-card">
+                <div class="tc-info-row">
+                    <img src="https://picsum.photos/100?random=5" alt="Aarav Sharma" class="tc-avatar">
+                    <div class="tc-details">
+                        <h2 class="tc-name">Aarav Sharma</h2>
+                        <div class="tc-subtext">
+                            Service Address: Butwal, Nepal
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tc-actions">
+                    <button class="tc-btn btn-message-light">
+                        <i data-lucide="message-square"></i>
+                        Message
+                    </button>
+                    <button class="tc-btn btn-call-solid">
+                        <i data-lucide="phone"></i>
+                        Call
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-full mark-arrived-btn">
+                <i data-lucide="map-pin-check"></i>
+                Mark as Arrived
+            </button>
+
+            <div class="tracking-progress-section">
+                <h2 class="progress-heading">Booking Progress</h2>
+                
+                <div class="stepper-container">
+                    <div class="stepper-line"></div>
+                    
+                    <div class="step-item completed">
+                        <div class="step-indicator">
+                            <i data-lucide="check" class="step-check"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title">Booking confirmed</h3>
+                            <p class="step-time">10:45 AM</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item completed">
+                        <div class="step-indicator">
+                            <i data-lucide="check" class="step-check"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title">Provider accepted</h3>
+                            <p class="step-time">10:52 AM</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item active">
+                        <div class="step-indicator">
+                            <div class="step-dot"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title">Provider is on the way</h3>
+                            <p class="step-subtext">Currently en route</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item upcoming">
+                        <div class="step-indicator"></div>
+                        <div class="step-content">
+                            <h3 class="step-title">Provider arrived</h3>
+                        </div>
+                    </div>
+
+                    <div class="step-item upcoming">
+                        <div class="step-indicator"></div>
+                        <div class="step-content">
+                            <h3 class="step-title">Service completed</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        /* Leaflet Map Initialization */
+        const map = L.map('tracking-map', { zoomControl: false }).setView([27.7000, 83.4486], 14);
+        
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+            maxZoom: 19
+        }).addTo(map);
+
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        // Solid Route Polyline (Provider View)
+        const routeCoords = [
+            [27.6950, 83.4500], // Start (Customer location)
+            [27.7050, 83.4470]  // End (Provider location)
+        ];
+        
+        L.polyline(routeCoords, {
+            color: '#2563EB',
+            weight: 5
+        }).addTo(map);
+
+        // Custom Marker: Customer Location (Pill above dot)
+        const customerIcon = L.divIcon({
+            className: 'map-customer-marker-group',
+            html: `
+                <div class="map-customer-pill">Customer Location</div>
+                <div class="map-customer-dot"></div>
+            `,
+            iconSize: [120, 40],
+            iconAnchor: [60, 36] // Anchors the dot exactly on the coordinate
+        });
+
+        // Custom Marker: Provider Location (Vehicle/Circle)
+        const providerVehicleIcon = L.divIcon({
+            className: 'map-provider-vehicle',
+            html: `<div class="vehicle-circle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></div>`,
+            iconSize: [28, 28],
+            iconAnchor: [14, 14]
+        });
+
+        // Add markers to the map
+        L.marker(routeCoords[0], { icon: customerIcon }).addTo(map); 
+        L.marker(routeCoords[1], { icon: providerVehicleIcon }).addTo(map); 
+    </script>
+</body>
+</html>

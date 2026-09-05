@@ -1,0 +1,276 @@
+<main id="page-body">
+    <!-- HERO SECTION -->
+    <section class="services-hero">
+        <div class="container services-hero-container">
+            <h1 class="services-hero-title">Our Services</h1>
+            <p class="services-hero-subtext">Browse trusted local professionals across every category. Quality service, transparent pricing, no surprises.</p>
+            
+            <!-- Floating Search Bar -->
+            <div class="hero-search-bar">
+                <div class="search-input-group">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="services-page-search" placeholder="Search for a service..." class="search-input">
+                </div>
+                <div class="search-divider"></div>
+                <div class="search-location-group">
+                    <i data-lucide="map-pin" class="location-icon"></i>
+                    <span class="location-text">Butwal, Nepal</span>
+                </div>
+                <button class="btn btn-primary search-btn" onclick="handleServicesSearch()">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICE CATEGORIES GRID -->
+    <section class="services-grid-section">
+        <div class="container">
+            <h2 class="section-heading">Browse by Category</h2>
+            
+            <div class="services-grid">
+                
+                <!-- Card 1: Electrician -->
+                <div class="service-card-expanded" style="cursor: pointer;" onclick="openCategoryModal('Electrician')">
+                    <div class="sc-icon-circle">
+                        <i data-lucide="plug"></i>
+                    </div>
+                    <div class="sc-content">
+                        <h3 class="sc-title">Electrician</h3>
+                        <p class="sc-desc">Wiring, fixtures, and electrical repairs</p>
+                        <span class="sc-price">Starting at Rs. 500</span>
+                    </div>
+                    <button type="button" class="btn sc-view-btn" onclick="event.stopPropagation(); handleViewProvidersDirect('Electrician');">View Providers</button>
+                </div>
+
+                <!-- Card 2: Plumber -->
+                <div class="service-card-expanded" style="cursor: pointer;" onclick="openCategoryModal('Plumber')">
+                    <div class="sc-icon-circle">
+                        <i data-lucide="wrench"></i>
+                    </div>
+                    <div class="sc-content">
+                        <h3 class="sc-title">Plumber</h3>
+                        <p class="sc-desc">Pipe leaks, fittings, and water systems</p>
+                        <span class="sc-price">Starting at Rs. 800</span>
+                    </div>
+                    <button type="button" class="btn sc-view-btn" onclick="event.stopPropagation(); handleViewProvidersDirect('Plumber');">View Providers</button>
+                </div>
+
+                <!-- Card 3: Mechanic -->
+                <div class="service-card-expanded" style="cursor: pointer;" onclick="openCategoryModal('Mechanic')">
+                    <div class="sc-icon-circle">
+                        <i data-lucide="car"></i>
+                    </div>
+                    <div class="sc-content">
+                        <h3 class="sc-title">Mechanic</h3>
+                        <p class="sc-desc">On-demand vehicle repair and servicing</p>
+                        <span class="sc-price">Starting at Rs. 1,200</span>
+                    </div>
+                    <button type="button" class="btn sc-view-btn" onclick="event.stopPropagation(); handleViewProvidersDirect('Mechanic');">View Providers</button>
+                </div>
+
+                <!-- Card 4: Cleaner -->
+                <div class="service-card-expanded" style="cursor: pointer;" onclick="openCategoryModal('Cleaner')">
+                    <div class="sc-icon-circle">
+                        <i data-lucide="brush"></i>
+                    </div>
+                    <div class="sc-content">
+                        <h3 class="sc-title">Cleaner</h3>
+                        <p class="sc-desc">Deep cleaning for homes and offices</p>
+                        <span class="sc-price">Starting at Rs. 1,000</span>
+                    </div>
+                    <button type="button" class="btn sc-view-btn" onclick="event.stopPropagation(); handleViewProvidersDirect('Cleaner');">View Providers</button>
+                </div>
+
+                <!-- Card 5: Carpenter -->
+                <div class="service-card-expanded" style="cursor: pointer;" onclick="openCategoryModal('Carpenter')">
+                    <div class="sc-icon-circle">
+                        <i data-lucide="pencil"></i>
+                    </div>
+                    <div class="sc-content">
+                        <h3 class="sc-title">Carpenter</h3>
+                        <p class="sc-desc">Custom furniture building and repairs</p>
+                        <span class="sc-price">Starting at Rs. 900</span>
+                    </div>
+                    <button type="button" class="btn sc-view-btn" onclick="event.stopPropagation(); handleViewProvidersDirect('Carpenter');">View Providers</button>
+                </div>
+
+                <!-- Card 6: Painter -->
+                <div class="service-card-expanded" style="cursor: pointer;" onclick="openCategoryModal('Painter')">
+                    <div class="sc-icon-circle">
+                        <i data-lucide="paint-roller"></i>
+                    </div>
+                    <div class="sc-content">
+                        <h3 class="sc-title">Painter</h3>
+                        <p class="sc-desc">Interior and exterior wall painting</p>
+                        <span class="sc-price">Starting at Rs. 1,500</span>
+                    </div>
+                    <button type="button" class="btn sc-view-btn" onclick="event.stopPropagation(); handleViewProvidersDirect('Painter');">View Providers</button>
+                </div>
+
+                <!-- Card 7: Home Shifting -->
+                <div class="service-card-expanded" style="cursor: pointer;" onclick="openCategoryModal('Home Shifting')">
+                    <div class="sc-icon-circle">
+                        <i data-lucide="truck"></i>
+                    </div>
+                    <div class="sc-content">
+                        <h3 class="sc-title">Home Shifting</h3>
+                        <p class="sc-desc">Safe and reliable packing and moving</p>
+                        <span class="sc-price">Starting at Rs. 2,500</span>
+                    </div>
+                    <button type="button" class="btn sc-view-btn" onclick="event.stopPropagation(); handleViewProvidersDirect('Home Shifting');">View Providers</button>
+                </div>
+
+                <!-- Card 8: Appliance Repair -->
+                <div class="service-card-expanded" style="cursor: pointer;" onclick="openCategoryModal('Appliance Repair')">
+                    <div class="sc-icon-circle">
+                        <i data-lucide="briefcase"></i>
+                    </div>
+                    <div class="sc-content">
+                        <h3 class="sc-title">Appliance Repair</h3>
+                        <p class="sc-desc">AC, fridge, and washing machine fixes</p>
+                        <span class="sc-price">Starting at Rs. 1,000</span>
+                    </div>
+                    <button type="button" class="btn sc-view-btn" onclick="event.stopPropagation(); handleViewProvidersDirect('Appliance Repair');">View Providers</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE SAMHAL -->
+    <section class="services-trust-section">
+        <div class="container">
+            <h2 class="trust-heading">Why Choose SAMHAL</h2>
+            
+            <div class="trust-grid">
+                <!-- Point 1 -->
+                <div class="trust-item">
+                    <div class="trust-icon-circle">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="trust-title">Verified Professionals</h3>
+                    <p class="trust-desc">Every provider is background-checked and rated by real customers.</p>
+                </div>
+
+                <!-- Point 2 -->
+                <div class="trust-item">
+                    <div class="trust-icon-circle">
+                        <i data-lucide="clock"></i>
+                    </div>
+                    <h3 class="trust-title">Fast Response</h3>
+                    <p class="trust-desc">Most providers respond within an hour of booking.</p>
+                </div>
+
+                <!-- Point 3 -->
+                <div class="trust-item">
+                    <div class="trust-icon-circle">
+                        <i data-lucide="tag"></i>
+                    </div>
+                    <h3 class="trust-title">Transparent Pricing</h3>
+                    <p class="trust-desc">No hidden fees. See the price before you book.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="services-cta-section">
+        <div class="container services-cta-container">
+            <h2 class="cta-heading">Can't find what you're looking for?</h2>
+            <p class="cta-subtext">Contact our support team and we'll help you find the right professional.</p>
+            <a href="#" onclick="return false;" class="btn btn-primary cta-btn">Contact Support</a>
+        </div>
+    </section>
+
+    <!-- UPDATED CATEGORY POPUP MODAL (Horizontal Premium Design) -->
+    <style>
+        .premium-modal-wrapper {
+            background-color: #F4F7F6;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .premium-modal-left {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        .premium-modal-card {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            padding: 32px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+        }
+        .premium-modal-right {
+            flex: 1;
+            padding: 40px 40px 40px 0;
+        }
+        .premium-modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            min-height: 350px;
+        }
+        @media (max-width: 768px) {
+            .premium-modal-wrapper { flex-direction: column; }
+            .premium-modal-right { padding: 0 40px 40px 40px; }
+            .premium-modal-img { min-height: 250px; }
+        }
+    </style>
+
+    <div id="service-category-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(19, 27, 46, 0.85); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
+        <div class="premium-modal-wrapper">
+            <!-- Close Button -->
+            <button onclick="document.getElementById('service-category-modal').style.display='none'" style="position: absolute; top: 16px; right: 16px; background: white; color: #131B2E; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 10;">&times;</button>
+            
+            <!-- Left Side (Floating White Card) -->
+            <div class="premium-modal-left">
+                <div class="premium-modal-card">
+                    <h2 id="modal-cat-title" style="margin: 0 0 24px 0; color: #131B2E; font-size: 32px; font-weight: 700;">Category Name</h2>
+                    
+                    <ul id="modal-cat-bullets" style="list-style: none; padding: 0; margin: 0 0 32px 0; color: #434655; font-size: 15px; line-height: 1.6; display: flex; flex-direction: column; gap: 16px;">
+                    </ul>
+                    
+                    <div style="margin-top: auto;">
+                        <button id="modal-view-provider-btn" style="width: 100%; background-color: #004AC6; color: white; padding: 16px; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background 0.2s;">View Providers</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side (Large Image) -->
+            <div class="premium-modal-right">
+                <img id="modal-cat-img" src="" alt="Service Category" class="premium-modal-img">
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- EXACT MASTER FOOTER -->
+<footer class="footer">
+    <div class="container footer-container">
+        <div class="footer-left">
+            <a href="#" onclick="navigateTo('home'); return false;" class="logo brand-logo-group">
+    <img src="images/logo.jpeg" alt="SAMHAL" class="brand-logo-img">
+</a>
+            <p class="tagline">Your trusted platform for local, reliable service professionals.</p>
+            <p class="copyright">&copy; 2026 SAMHAL Services Nepal. All rights reserved.</p>
+        </div>
+        <div class="footer-right">
+            <ul class="footer-links">
+                <li><a href="#" onclick="return false;">About Us</a></li>
+                <li><a href="#" onclick="return false;">Contact Support</a></li>
+                <li><a href="#" onclick="return false;">Privacy Policy</a></li>
+                <li><a href="#" onclick="return false;">Terms of Service</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
