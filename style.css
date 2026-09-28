@@ -311,8 +311,8 @@ ul {
 }
 
 .service-icon {
-    width: 64px;
-    height: 64px;
+    width: 50px;
+    height: 50px;
     background-color: var(--bg-hero);
     border-radius: 50%;
     display: flex;
@@ -320,6 +320,7 @@ ul {
     justify-content: center;
     margin-bottom: 16px;
     color: var(--primary);
+    object-fit: contain; 
 }
 
 .service-card span {
@@ -902,8 +903,8 @@ ul {
 }
 
 .booking-icon-circle {
-    width: 56px;
-    height: 56px;
+    width: 50px;
+    height: 50px;
     background-color: #E2E7FF;
     border-radius: 50%;
     display: flex;
@@ -911,6 +912,12 @@ ul {
     justify-content: center;
     color: var(--primary);
     flex-shrink: 0;
+}
+.booking-image {
+width: 100%;
+  height: 100%;
+  object-fit: contain;
+  
 }
 
 .booking-title {
@@ -5061,13 +5068,13 @@ a.profile-nav-logo:active {
 .sc-icon-circle {
     width: 56px;
     height: 56px;
-    background-color: #E2E7FF;
+    background-color: #eeeaea;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #004AC6;
-    margin-bottom: 20px;
+    color: #09e7e7;
+    margin-bottom: 30px;
 }
 
 .sc-icon-circle svg {
@@ -5150,7 +5157,7 @@ a.profile-nav-logo:active {
 .trust-icon-circle {
     width: 64px;
     height: 64px;
-    background-color: #E2E7FF;
+    background-color: #eeeaea;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -5651,6 +5658,7 @@ a.profile-nav-logo:active {
     justify-content: center;
     color: #004AC6;
     margin-bottom: 24px;
+    object-fit: contain;
 }
 
 .bap-icon-circle svg {
@@ -5724,7 +5732,9 @@ a.profile-nav-logo:active {
     align-items: center;
     justify-content: center;
     color: #004AC6;
-    border: 8px solid var(--white); /* Masks the line behind it */
+    border: 8px solid var(--white); 
+    object-fit:center;
+   
 }
 
 .bap-step-icon-circle svg {

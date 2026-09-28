@@ -7,19 +7,19 @@ let appState = {
     activeBooking: null, 
     selectedProvider: null, 
     selectedPayment: null,
-    currentUser: { name: 'Aarav' },
+    currentUser: { name: 'Dipson' },
     notifications: [],
     bookingsHistory: [
         {
             service: 'Plumbing Repair',
-            provider: 'Krishna Plumbing Solutions',
+            provider: '  Kritan Plumbing ',
             date: 'Oct 12, 2023 • 10:30 AM',
             price: 'NPR 1,200',
             status: 'Completed'
         },
         {
-            service: 'Home Shifting',
-            provider: 'Quick Movers Butwal',
+            service: 'Plumbing Repair',
+            provider: 'Anik Plumber',
             date: 'Sep 28, 2023 • 09:00 AM',
             price: 'NPR 8,500',
             status: 'Cancelled'
@@ -673,7 +673,60 @@ window.openCategoryModal = function(title) {
     });
     
     const randomImgId = Math.floor(Math.random() * 200) + 100;
-    document.getElementById('modal-cat-img').src = `https://picsum.photos/600/800?random=${randomImgId}`;
+
+
+if(title === 'Electrician'){
+ document.getElementById('modal-cat-img').src = `images/services/electrician.jpg`;
+
+}
+
+if(title === 'Plumber'){
+ document.getElementById('modal-cat-img').src = `images/services/plumber.jpg`;
+
+}
+
+
+if(title === 'Mechanic'){
+ document.getElementById('modal-cat-img').src = `images/services/mechanic.jpg`;
+
+}
+
+
+if(title === 'Cleaner'){
+ document.getElementById('modal-cat-img').src = `images/services/cleaner.jpg`;
+
+}
+
+
+if(title === 'Carpenter'){
+ document.getElementById('modal-cat-img').src = `images/services/carpenter.jpg`;
+
+}
+
+
+if(title === 'Painter'){
+ document.getElementById('modal-cat-img').src = `images/services/painter.jpg`;
+
+}
+
+
+if(title === 'Home Shifting'){
+ document.getElementById('modal-cat-img').src = `images/services/home_shifting.jpg`;
+
+}
+
+
+if(title === 'Appliance Repair'){
+ document.getElementById('modal-cat-img').src = `images/services/repairr.jpg`;
+
+}
+
+
+
+
+
+
+    // document.getElementById('modal-cat-img').src = `https://picsum.photos/600/800?random=${randomImgId}`;
 
     const viewBtn = document.getElementById('modal-view-provider-btn');
     viewBtn.onclick = function() {
@@ -782,7 +835,7 @@ function initDashboard() {
     const welcomeHeading = document.getElementById('dash-welcome-heading');
     const displayName = (appState.currentUser && appState.currentUser.name) ? appState.currentUser.name : 'Aarav';
     if (welcomeHeading) {
-        welcomeHeading.textContent = `Welcome back, ${displayName}! 👋`;
+        welcomeHeading.textContent = `Welcome back, ${displayName}! `;
     }
 
     // Allow pressing Enter in search bar
@@ -813,7 +866,7 @@ function initDashboard() {
                 <div class="active-booking-card">
                     <div class="booking-left">
                         <div class="booking-icon-circle">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="12" y2="12"/><line x1="12" x2="12" y1="2" y2="22"/><path d="m20 16-4-4 4-4"/><path d="m4 8 4 4-4 4"/><path d="m16 4-4 4-4-4"/><path d="m8 20 4-4 4 4"/></svg>
+                            <img src="images/logo.jpeg"  alt="logo" class="booking-image" >  
                         </div>
                         <div class="booking-details">
                             <h3 class="booking-title">${b.service}</h3>
@@ -848,7 +901,7 @@ function initDashboard() {
                 <div class="list-booking-card">
                     <div class="booking-left">
                         <div class="booking-icon-circle">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                     <img src="images/logo.jpeg"  alt="logo" class="booking-image" >                   
                         </div>
                         <div class="booking-details">
                             <h3 class="booking-title">${item.service}</h3>
@@ -1117,7 +1170,7 @@ function renderProvidersList() {
         card.innerHTML = `
             <div class="fap-card-top">
                 <div class="fap-avatar-wrapper">
-                    <img src="${p.avatarUrl}" alt="${p.name}" class="fap-avatar">
+                    <img src="images/logo.jpeg">
                     ${onlineDotHTML}
                 </div>
                 <div class="fap-card-info">
@@ -1189,7 +1242,7 @@ function initBookingService() {
         pricePerHour: 1000,
         rating: '4.9',
         reviewCount: 120,
-        avatarUrl: 'https://picsum.photos/100?random=99'
+        avatarUrl: 'images/logo.jpeg'
     };
 
     const titleEl = document.getElementById('booking-service-title');
@@ -1207,7 +1260,7 @@ function initBookingService() {
     if (priceEl) priceEl.textContent = `Rs. ${provider.pricePerHour}`;
     
     if (sumNameEl) sumNameEl.textContent = provider.name;
-    if (sumAvatarEl) sumAvatarEl.src = provider.avatarUrl;
+    if (sumAvatarEl) sumAvatarEl.src = `images/logo.jpeg`;
     if (sumRatingEl) sumRatingEl.textContent = `${provider.rating} (${provider.reviewCount}+ jobs)`;
     if (sumServEl) sumServEl.textContent = provider.category;
     
@@ -1523,7 +1576,7 @@ function initBookingReceipt() {
     
     // Attempt to pull the matching avatar from the selected provider object
     if (avatarEl && appState.selectedProvider && appState.selectedProvider.avatarUrl) {
-        avatarEl.src = appState.selectedProvider.avatarUrl;
+        avatarEl.src = `images/logo.jpeg`;
     }
 
     if (baseFee) baseFee.textContent = `Rs. ${Number(booking.fee).toLocaleString()}`;
@@ -1900,7 +1953,7 @@ function initProviderProfile() {
     if (ratingEl) ratingEl.textContent = `${provider.rating} (${provider.reviewCount} reviews)`;
     if (distanceEl) distanceEl.textContent = `Butwal · ${provider.distance}km away`;
     if (priceEl) priceEl.textContent = `Starts at Rs. ${provider.pricePerHour}`;
-    if (avatarEl) avatarEl.src = provider.avatarUrl;
+    if (avatarEl) avatarEl.src = `images/logo.jpeg`;
 
     // Update "About [Name]" heading if present
     const aboutTitleEl = document.querySelector('.profile-card-title');
