@@ -322,6 +322,10 @@ ul {
     color: var(--primary);
     object-fit: contain; 
 }
+.index-logo{
+    height:100%;
+    width:100%;
+}
 
 .service-card span {
     color: var(--navy);
